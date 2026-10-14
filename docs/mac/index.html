@@ -85,9 +85,11 @@
         <tr><td>Computer control</td><td>In the app, not fully tested yet on macOS</td></tr>
         <tr><td>Remote Access</td><td>Not confirmed on macOS</td></tr>
         <tr><td>Automatic update</td><td>Not confirmed on macOS</td></tr>
+        <!-- [TO CONFIRM: did a Mac on 3.0.6 find, check and install the update to 3.0.7? If yes, say so in this row and in the release post.] -->
       </tbody>
     </table>
 
+    <!-- [TO CONFIRM: on which Macs has 3.0.7 run? Keep or change the next sentence.] -->
     <p>The app has run on one Mac so far, an M5 Pro with 48 GB. That is why the build carries the beta label. If something breaks on your machine, the <a href="https://github.com/PurpleDoubleD/locally-uncensored/issues">issue tracker</a> is the place to say so.</p>
 
     <h2>How to Install</h2>
@@ -98,9 +100,12 @@
       <li>Start it. The setup wizard picks a first model for your machine.</li>
     </ol>
 
+    <!-- [TO CONFIRM: check the real 3.0.7 .dmg after the release run as on 11.10.2026 (codesign, spctl for the image and the app, stapler validate). The sentence below stays only if Gatekeeper accepts both.] -->
     <p>
     The .dmg is signed and notarized.
     </p>
+
+    <p>On the first start macOS asks whether you want to open an app downloaded from the internet. That is expected, click Open. If macOS says LU is damaged or cannot be checked for malicious software, the download is incomplete or not the file from the Releases page. Do not open it and do not work around the message. Download the .dmg again from the <a href="https://github.com/PurpleDoubleD/locally-uncensored/releases/latest">Releases page</a>, and if the message comes back, tell us in the <a href="https://locallyuncensored.com/discord" target="_blank" rel="noopener">Discord</a>.</p>
 
     <p>Local use is free and needs no account. The app is open source under AGPL-3.0.</p>
 
