@@ -158,6 +158,17 @@ Yes. The endpoint is OpenAI-compatible Chat Completions at the base URL https://
 - AnimateDiff Lightning, Mochi, Cosmos, SVD
 - Removed in v2.5.9 because they could never run: CogVideoX (both bundles) and Pyramid Flow. Their pipelines were built against ComfyUI node names that no version of the wrappers registers, so every generation came back an error. Nothing already on disk is deleted; they are simply no longer offered. Wan 2.1 and 2.2, LTX, SVD, FramePack, Hunyuan, Mochi and Cosmos are unaffected.
 
+## What Changed in v3.0.7
+
+[TO CONFIRM: check this list against the final CHANGELOG section 3.0.7 and delete this line.]
+
+- Characters everywhere in Create: a trained character can be picked on Image, Edit and every video tab and sets the Z Image model it was trained for. A video with a character runs in two steps, a picture of the character first, then the video from that picture.
+- Character cards (PNG or JSON, card versions 1 to 3) import as personas with their picture and greeting, and export as JSON cards.
+- Enhance Image runs locally on Windows and Linux (Real-ESRGAN x4plus, 2x or 4x). The gallery has folders and shows the settings a result was made with.
+- A think budget for the bundled engine, read aloud speaks only what the answer shows (issue 160), and a compaction merges earlier summaries into one state (issue 151).
+- Mac (beta): Edit with a mask, HiRes, Remove Background through macOS Vision, Enhance with SeedVR2 3B, Extend Video, and Music with ACE-Step 1.5.
+- Fixes: ComfyUI on a machine whose only Python is one PyTorch does not serve yet, GPU layers -1 on AMD and Intel cards (issue 156), the microphone on Linux (issue 162).
+
 ## What Changed in v3.0.6
 
 - Voice (beta): talk to LU and hear it answer. Runs locally, 15 English voices, tools by voice, a switch for thinking and a switch that unloads the voice engine.
