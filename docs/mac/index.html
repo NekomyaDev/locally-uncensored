@@ -88,8 +88,7 @@
       </tbody>
     </table>
 
-    <!-- [TO CONFIRM: on which Macs has 3.0.7 run? Keep or change the next sentence.] -->
-    <p>The app has run on one Mac so far, an M5 Pro with 48 GB. That is why the build carries the beta label. If something breaks on your machine, the <a href="https://github.com/PurpleDoubleD/locally-uncensored/issues">issue tracker</a> is the place to say so.</p>
+    <p>3.0.7 has run on one Mac so far, an M5 Pro with 48 GB on macOS 26.3.1. Macs with less memory have not been tested, and neither have the large LTX video models, which need 64 GB. That is why the build carries the beta label. If something breaks on your machine, the <a href="https://github.com/PurpleDoubleD/locally-uncensored/issues">issue tracker</a> is the place to say so.</p>
 
     <h2>How to Install</h2>
 
@@ -99,9 +98,9 @@
       <li>Start it. The setup wizard picks a first model for your machine.</li>
     </ol>
 
-    <!-- [TO CONFIRM: check the real 3.0.7 .dmg after the release run as on 11.10.2026 (codesign, spctl for the image and the app, stapler validate). The sentence below stays only if Gatekeeper accepts both.] -->
+    <!-- [TO CONFIRM: check the 3.0.7 .dmg with spctl and stapler after the release run.] -->
     <p>
-    The .dmg is signed and notarized.
+    The .dmg is signed with an Apple Developer ID and notarized by Apple. It runs on Apple Silicon with macOS 14 or newer. Intel Macs are not supported.
     </p>
 
     <p>On the first start macOS asks whether you want to open an app downloaded from the internet. That is expected, click Open. If macOS says LU is damaged or cannot be checked for malicious software, the download is incomplete or not the file from the Releases page. Do not open it and do not work around the message. Download the .dmg again from the <a href="https://github.com/PurpleDoubleD/locally-uncensored/releases/latest">Releases page</a>, and if the message comes back, tell us in the <a href="https://locallyuncensored.com/discord" target="_blank" rel="noopener">Discord</a>.</p>
