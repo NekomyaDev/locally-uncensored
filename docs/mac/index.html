@@ -24,7 +24,7 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://locallyuncensored.com/"},{"@type":"ListItem","position":2,"name":"Mac","item":"https://locallyuncensored.com/mac/"}]}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is there a Mac version of Locally Uncensored?","acceptedAnswer":{"@type":"Answer","text":"Yes, since version 3.0.6, in beta. The Mac build is for Apple Silicon and needs macOS 14 or newer."}},{"@type":"Question","name":"Does it run on an Intel Mac?","acceptedAnswer":{"@type":"Answer","text":"No. Intel Macs are not supported. On an Intel Mac you can use the hosted studio in a browser."}},{"@type":"Question","name":"Do I need ComfyUI on the Mac?","acceptedAnswer":{"@type":"Answer","text":"No. On the Mac, Create makes images and video on the Mac itself, without ComfyUI."}},{"@type":"Question","name":"Is the Mac build finished?","acceptedAnswer":{"@type":"Answer","text":"It is a beta. We tested it on an M5 Pro with 48 GB. Tell us how it runs on yours. Remote Access and the automatic update are not confirmed on macOS, and computer control is not fully tested yet."}},{"@type":"Question","name":"Is it free on the Mac?","acceptedAnswer":{"@type":"Answer","text":"Yes. Local use is free and needs no account. The app is open source under AGPL-3.0."}}]}
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is there a Mac version of Locally Uncensored?","acceptedAnswer":{"@type":"Answer","text":"Yes, since version 3.0.6, in beta. The Mac build is for Apple Silicon and needs macOS 14 or newer."}},{"@type":"Question","name":"Does it run on an Intel Mac?","acceptedAnswer":{"@type":"Answer","text":"No. Intel Macs are not supported. On an Intel Mac you can use the hosted studio in a browser."}},{"@type":"Question","name":"Do I need ComfyUI on the Mac?","acceptedAnswer":{"@type":"Answer","text":"No. On the Mac, Create makes images and video on the Mac itself, without ComfyUI. Since 3.0.7 that includes Music, Enhance Image, Remove Background, Talking Character, Motion Control and training a character."}},{"@type":"Question","name":"Is the Mac build finished?","acceptedAnswer":{"@type":"Answer","text":"It is a beta. We tested it on an M5 Pro with 48 GB. Tell us how it runs on yours. Remote Access and the automatic update are not confirmed on macOS, and computer control is not fully tested yet."}},{"@type":"Question","name":"Is it free on the Mac?","acceptedAnswer":{"@type":"Answer","text":"Yes. Local use is free and needs no account. The app is open source under AGPL-3.0."}}]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,7 +80,8 @@
       <thead><tr><th>Part</th><th>On the Mac</th></tr></thead>
       <tbody>
         <tr><td>Chat</td><td>Local models through the bundled server, with Metal</td></tr>
-        <tr><td>Create</td><td>Images and video on the Mac itself, without ComfyUI. Beta</td></tr>
+        <tr><td>Create</td><td>Images and video on the Mac itself, without ComfyUI. Since 3.0.7 also Music, Enhance Image, Remove Background, masks in Edit, Extend Video, Talking Character and Motion Control. Beta</td></tr>
+        <tr><td>Character training</td><td>Since 3.0.7, on the Mac itself. Slow: about 7 seconds a step on an M5 Pro</td></tr>
         <tr><td>Voice</td><td>Available</td></tr>
         <tr><td>Computer control</td><td>In the app, not fully tested yet on macOS</td></tr>
         <tr><td>Remote Access</td><td>Not confirmed on macOS</td></tr>
@@ -126,7 +127,7 @@
     <p>No. Intel Macs are not supported. On an Intel Mac you can use the hosted studio in a browser.</p>
 
     <h3>Do I need ComfyUI on the Mac?</h3>
-    <p>No. On the Mac, Create makes images and video on the Mac itself, without ComfyUI.</p>
+    <p>No. On the Mac, Create makes images and video on the Mac itself, without ComfyUI. Since 3.0.7 that includes Music, Enhance Image, Remove Background, Talking Character, Motion Control and training a character.</p>
 
     <h3>Is the Mac build finished?</h3>
     <p>It is a beta. We tested it on an M5 Pro with 48 GB. Tell us how it runs on yours. Remote Access and the automatic update are not confirmed on macOS, and computer control is not fully tested yet.</p>

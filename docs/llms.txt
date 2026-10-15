@@ -34,7 +34,7 @@ Locally Uncensored is a free, open-source (AGPL-3.0) local AI studio for the des
 - Qwen-Image 2.1 runs locally on Windows and Linux and does both jobs: text to image, and editing a reference image from a prompt with no mask; about 16 GB of files, ComfyUI 0.37.0 or newer, research license without commercial use (v3.0.1)
 - Models has a dedicated LoRAs tab on Windows and Linux: CivitAI search and download into the ComfyUI loras folder, an installed list with sizes and trigger words, and deletion (v3.0.1)
 - Only local AI app combining chat + coding agent + image generation + video generation + mobile remote in one interface
-- Talking Character, Music, Extend Video and Motion Control run as full local ComfyUI lanes on your own GPU; only Upscale and Erase Object are cloud-only (v2.5.8, refined in v2.5.9); Character Studio trains locally since v2.6.0
+- Talking Character, Music, Extend Video and Motion Control run as full local ComfyUI lanes on your own GPU; Enhance Image runs locally on ComfyUI since v3.0.7, Erase Object stays cloud-only; Character Studio trains locally since v2.6.0, with a Low VRAM setting for cards under 12 GB and local training on Apple Silicon Macs since v3.0.7
 - Per-lane frame count, resolution and step controls on every Create lane, so low-VRAM runs are practical (v2.5.8)
 - Surgical file_edit tool in the Coding Agent: it changes the lines you asked for instead of rewriting whole files, and num_ctx follows the model instead of being pinned to 8192 (v2.5.9)
 - Remote access works with non-Ollama backends: LM Studio, Lemonade and llama.cpp are translated to and from the phone's request shape, including streaming, tool calls, vision and reasoning (v2.5.9)
