@@ -127,6 +127,10 @@
 
     <p>Under Advanced settings, a workflow from the Workflows view now shows a list called Workflow parameters: each node with its values, such as the VAE, CLIP skip, LoRA strength, denoise or any value of a custom node. Numbers keep the limits ComfyUI states, and lists offer the choices ComfyUI has. What LU sets on its own (prompt, seed, size, steps, CFG, sampler, scheduler, model) is named per node and not offered twice. The VAE and text encoder stay on Auto until you pick one. Changes are kept per workflow and go into every run, and Reset goes back to the values in the file. Nodes fold, and a search finds a setting by name. Built-in workflows are not affected. This is on Windows and Linux, since a Mac runs no ComfyUI workflows (<a href="https://github.com/PurpleDoubleD/locally-uncensored/issues/8">issue 8</a>).</p>
 
+    <h3>Your own workflow in Motion Control</h3>
+
+    <p>Motion Control always used LU's own graph, even with a workflow picked for its model. A workflow imported in the Workflows window and paired with a Wan Animate model now runs there. LU fills in the model, prompt, seed, character picture and driving video and leaves everything else as saved. The import reads the model from a GGUF loader and the clip from Load Video or Video Helper Suite's Load Video, files a Wan Animate graph under that model family, and the Workflow picker finds it for a Motion Control model. On Video, Animate and Motion Control the workflow button now reads Use your own ComfyUI workflow.</p>
+
     <h2>Edit with up to ten images</h2>
 
     <p>With Qwen-Image 2.1 on your own machine, the reference strip under the source now takes up to nine more images, up from three. On Windows and Linux this runs through ComfyUI, on a Mac through the built-in engine. The tiles wrap into rows, and the hint names them as a range, for example "image 2 to image 10". From four extra images on it asks you to say what each one brings, for example "the scarf from image 3".</p>
@@ -180,6 +184,7 @@
       <li><strong>Think budget</strong> next to Think in the sampling popup and in Settings, Generation. It works with the LU Engine and with Claude models. For Ollama, LM Studio, other OpenAI-compatible servers and LU Cloud the field is off and says so</li>
       <li><strong>Chat Reply Timeout</strong> (<a href="https://github.com/PurpleDoubleD/locally-uncensored/issues/177">issue 177</a>). Settings, General sets how long a chat waits for the first word, up to 24 hours, or Off. The default stays 600 seconds, and Stop always ends the wait</li>
       <li><strong>Read aloud speaks what the answer shows</strong> (<a href="https://github.com/PurpleDoubleD/locally-uncensored/issues/160">issue 160</a>). Read aloud and the automatic reading take the same cleaned text the bubble shows, so reasoning markers are no longer spoken</li>
+      <li><strong>A picture made in the chat shows on the desktop.</strong> A current ComfyUI refuses the app window's direct load of a picture, so a chat image showed as a broken frame. The chat now fetches it through the app, as Create already did, also when the model repeats a ComfyUI picture in its answer</li>
       <li>Sending while you dictate ends the recording first</li>
       <li>The User-Agent of web search can be set under Settings, Search Provider</li>
       <li>Remote Access can carry your own name for the browser tab on the phone (<a href="https://github.com/PurpleDoubleD/locally-uncensored/issues/19">issue 19</a>), a paired phone can show the name of this computer, and the Remote Access texts point to the right buttons</li>
@@ -213,6 +218,8 @@
       <li><strong>GPU layers -1 lets the LU Engine fit the layers itself</strong> on AMD and Intel cards, against the free memory it measures (<a href="https://github.com/PurpleDoubleD/locally-uncensored/issues/156">issue 156</a>). On older cards that answer in garbage, LU first turns Flash Attention off and moves to the processor only when that does not help (<a href="https://github.com/PurpleDoubleD/locally-uncensored/issues/156">issue 156</a>)</li>
       <li>ComfyUI starts when no Python on your machine has PyTorch, for example with Python 3.15 as the only one. Install and Repair environment then build ComfyUI's environment from LU's own Python 3.12, which needs no administrator rights</li>
       <li>A render no longer starts LM Studio when it is closed, and a chat model with image input no longer warns at every render</li>
+      <li><strong>Motion Control and Talking Character models show under Installed.</strong> Wan Animate, Wan VACE and Wan S2V files are listed under Video, and the row says which Create tab runs them. Keep the original file name: a renamed file goes through the plain video graph, which cannot run it</li>
+      <li>A search in Get new covers both catalogue tabs while you type, so FramePack shows up from Mainstream too</li>
       <li>Importing a model follows the LU Engine folder you set under Model Storage</li>
       <li>A download whose partial file was already complete no longer fails on every Retry with HTTP 416 (<a href="https://github.com/PurpleDoubleD/locally-uncensored/issues/113">issue 113</a>)</li>
       <li>Voice and dictation may use the microphone on Linux (<a href="https://github.com/PurpleDoubleD/locally-uncensored/issues/162">issue 162</a>)</li>
@@ -232,12 +239,13 @@
       <li>In the app on Windows we checked the workflow import, Workflow parameters, node packs, a LoRA from a link, the ChatGPT import, the timeouts, images per run, the tab name for the phone and a GGUF file from the drive. Subgraphs, Update of a node pack, a real ChatGPT export and Edit with ten images on Windows and Linux have run in automated tests only</li>
       <li>Duplicate chat, Branch from here, the kept answers, Save of an edit, sampling values per persona, the persona fix, the group chat fixes and attached text files have run in automated tests only. So have Check files and Repair, the text per photo and Low VRAM for training. Low VRAM has not been measured on a card with 8 GB</li>
       <li>Use frames for a character, the Trained characters row in Edit with a real training set, and Use locally against LU Cloud have run in automated tests only</li>
+      <li>Your own workflow in Motion Control was checked with tests on QuantStack's Wan 2.2 Animate example workflow, not yet in a real run against ComfyUI. The chat picture fix was checked with tests, not yet on a Windows machine with ComfyUI Desktop</li>
       <li>The clip lengths per video family and Wan 2.1 VACE have not run with a real video model</li>
       <li>Reasoning effort for local models, the Chat Reply Timeout, several backends side by side and the line about LU Cloud for models too big have run in automated tests only. The think budget ran against a real LU Engine; with Claude models it has run in automated tests only</li>
       <li>The microphone fix for Linux has not been tried on a real machine, and GPU layers -1 has not been checked on an AMD or Intel card. Character cards were checked with Holo and Qwen models, not with Gemma</li>
       <li>Training on a Mac has run with 10 photos and 100 steps on one Mac with 48 GB. The Standard and Thorough settings, Macs with less memory and stopping a training in the middle have not. The large LTX models (64 GB and more) have not run on a real Mac, nor has anything on a Mac with less than 48 GB. Video LoRAs and multishot have not run with real models on a Mac</li>
       <li>[TO CONFIRM: Windows installer signed for 3.0.7 or not. If not: The Windows installers of this release are not code signed, so SmartScreen and some antivirus engines can warn about them. <a href="/is-locally-uncensored-safe/">Is Locally Uncensored safe?</a> explains the warning and how to check a download.]</li>
-      <li>[TO CONFIRM: did a Mac on 3.0.6 install the update to 3.0.7, and did an older Windows install find and install it.]</li>
+      <li>The update in the app from 3.0.6 to 3.0.7 was not checked through on any system before the release</li>
     </ul>
 
     <h2>Download</h2>
@@ -250,7 +258,7 @@
       <li>Linux: <a href="https://github.com/PurpleDoubleD/locally-uncensored/releases/latest/download/Locally.Uncensored_3.0.7_amd64.AppImage" download>AppImage</a>, <a href="https://github.com/PurpleDoubleD/locally-uncensored/releases/latest/download/Locally.Uncensored_3.0.7_amd64.deb" download>deb</a> or <a href="https://github.com/PurpleDoubleD/locally-uncensored/releases/latest/download/Locally.Uncensored-3.0.7-1.x86_64.rpm" download>rpm</a></li>
     </ul>
 
-    <p>Already on 3.0.x on Windows or Linux? The signed update channel brings 3.0.7 on the next start and waits for your click before it restarts. New here? The <a href="/guide/">handbook</a> takes you from installer to first generation, and the <a href="/guide/install/">install chapter</a> explains the SmartScreen warning and how updates arrive.</p>
+    <p>Already on 3.0.x on Windows or Linux? The signed update channel offers new releases on start and waits for your click before it restarts. We have not checked the step from 3.0.6 to 3.0.7 in the app, so if it does not arrive, take the installer above. New here? The <a href="/guide/">handbook</a> takes you from installer to first generation, and the <a href="/guide/install/">install chapter</a> explains the SmartScreen warning and how updates arrive.</p>
 
     <h2>Related</h2>
 
