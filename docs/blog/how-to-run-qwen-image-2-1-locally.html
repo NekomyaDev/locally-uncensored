@@ -155,7 +155,7 @@
     <p>Locally Uncensored 3.0.1 does not expose everything the model can do. Stated as it stands today, with no promises attached:</p>
 
     <ul>
-      <li><strong>Multiple reference images.</strong> The model takes up to ten in one pass. The Edit lane took one in 3.0.1. Update: since 3.0.7 it takes up to ten too. With more than four images in all, every image is scaled smaller so that together they need no more memory than four did, 640 pixels each for ten images at a 1024 canvas, and on ComfyUI the result comes out at that smaller size as well. Ten images have not run with a real model on Windows and Linux yet. On a Mac, 3.0.7 also adds masks and a prompt enhancer for this model.</li>
+      <li><strong>Multiple reference images.</strong> The model takes up to ten in one pass. The Edit lane took one in 3.0.1. Update: since 3.0.7 it takes up to ten too. With more images than fit at full size, every image is scaled smaller so that together they need no more memory than the full size ones would: four on larger cards, three on a 16 GB card and two on a card with less than 16 GB. With four, ten images run at 640 pixels each at a 1024 canvas, and on ComfyUI the result comes out at that smaller size as well. Ten images have not run with a real model on Windows and Linux yet. On a Mac, 3.0.7 also adds masks and a prompt enhancer for this model.</li>
       <li><strong>RGBA output.</strong> The new VAE carries an alpha channel. The app does not write one out. Not in this release.</li>
       <li><strong>Masks with this model.</strong> Closed on purpose, as described above.</li>
       <li><strong>A prompt enhancer and the KV cache node.</strong> Neither is wired up. Not in this release.</li>
