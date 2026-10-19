@@ -21,7 +21,7 @@ import { checkModelCapability } from '../../api/ollama'
 import { closeDialog, isTopDialog, nextFocusIndex, openDialog } from '../ui/dialog-a11y'
 import { MONOGRAM, MONOGRAM_INVERT } from './brand'
 import type { View } from '../../stores/uiStore'
-import { modelListIsStale } from '../../lib/model-list-staleness'
+import { modelListIsStale, openaiEntriesAreStale } from '../../lib/model-list-staleness'
 
 /**
  * Die Navigation als Daten, nicht als sechs abgeschriebene Knoepfe.
@@ -92,7 +92,8 @@ export function Header() {
   useEffect(() => { fetchModels() }, [fetchModels])
   useEffect(() => {
     const unsub = useProviderStore.subscribe((state, prev) => {
-      if (modelListIsStale(state.providers, prev.providers)) fetchModels()
+      if (modelListIsStale(state.providers, prev.providers)
+        || openaiEntriesAreStale(state.openaiEntries, prev.openaiEntries)) fetchModels()
     })
     return () => unsub()
   }, [fetchModels])
