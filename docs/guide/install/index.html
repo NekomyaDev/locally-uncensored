@@ -146,8 +146,6 @@ On some Wayland desktops and some Mesa versions the window opens and never paint
 
 <h2 id="warnings">What the security warnings mean</h2>
 
-<!-- [TO CONFIRM: is the Windows installer of 3.0.7 code signed? It stays unsigned unless the SignPath production certificate is in place and the repository variable SIGNPATH_SIGNING_POLICY_SLUG is set before the tag (state 14.10.2026: certificate pending, variable unset). If it is signed, rewrite step 1 under Windows, this section, /is-locally-uncensored-safe/, the FAQ and llms.txt; if not, delete this note.] -->
-
 <p>The Windows installer is built with NSIS and is not yet signed with a Microsoft Authenticode certificate. Without that certificate every reputation based check starts at zero trust, so three things happen: Windows SmartScreen shows "unrecognized app" on first run, some antivirus engines flag the file with a heuristic (Avast, for example, has reported <code>Win32:NSIS_Error[Heur]</code> on the installer bootstrap, and ESET has blocked it at run time), and behaviour scanners dislike that the app later downloads and starts other programs (the engine, ComfyUI, Python, model files). All of those downloads are visible in the source code. The project's <a href="https://github.com/PurpleDoubleD/locally-uncensored/blob/master/SECURITY.md#antivirus--browser-false-positives">SECURITY.md</a> keeps the current list of reports. SignPath Foundation has accepted the project for free code signing. The production certificate is not in place yet, and until it is the Windows installers ship unsigned. <a href="/is-locally-uncensored-safe/">Is Locally Uncensored safe?</a> keeps the signing status.</p>
 
 <p>What you can check yourself, before you click past a warning:</p>
