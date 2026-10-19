@@ -256,8 +256,8 @@
   }
 
   // ── The phone app (19.10.2026) ──────────────────────────────────────
-  // On a phone, first thing under the navigation: the official app is in
-  // review at Google Play and the App Store; on Android the APK of the latest
+  // On a phone, first thing under the navigation: the official app is coming
+  // to Google Play and the App Store; on Android the APK of the latest
   // release downloads now (lu-labs.ai follows the release asset), an iPhone
   // uses LU Cloud in the browser until then. A computer sees nothing; closed
   // stays closed in this browser.
@@ -280,11 +280,11 @@
     box.setAttribute("data-kind", kind);
     box.innerHTML = kind === "android"
       ? '<p class="lu-phone-app-title">LU is on your phone now</p>' +
-        '<p>The official app is in review at Google Play and the App Store and arrives there within the next days to two weeks. On Android you can download it now.</p>' +
+        '<p>The official app is coming to Google Play and the App Store in the next days to two weeks. On Android you can download it now.</p>' +
         '<a class="lu-phone-app-cta" href="' + APK_URL + '">Download for Android</a>' +
         '<p class="lu-phone-app-note">Android 7.0 or newer, 64-bit, about 27 MB. <a href="/android/">How to install</a></p>'
       : '<p class="lu-phone-app-title">LU for iPhone is on its way</p>' +
-        '<p>The app is in review at the App Store and arrives there within the next days to two weeks. Until then, use LU Cloud right here in your browser.</p>' +
+        '<p>The app is coming to the App Store in the next days to two weeks. Until then, use LU Cloud right here in your browser.</p>' +
         '<a class="lu-phone-app-cta" href="https://lu-labs.ai/app?src=luc-phone-banner">Open LU Cloud</a>';
     var x = document.createElement("button");
     x.type = "button"; x.className = "lu-phone-app-x"; x.setAttribute("aria-label", "Close"); x.textContent = "\u2715";
