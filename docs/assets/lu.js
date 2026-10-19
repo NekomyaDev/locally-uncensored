@@ -258,11 +258,11 @@
   // ── The phone app (19.10.2026) ──────────────────────────────────────
   // On a phone, first thing under the navigation: the iPhone app is in review
   // at the App Store, Google Play follows; on Android the APK of the latest
-  // release downloads now (lu-labs.ai follows the release asset), an iPhone
+  // release downloads now (the GitHub release asset), an iPhone
   // uses LU Cloud in the browser until then. A computer sees nothing; closed
   // stays closed in this browser.
   var PHONE_KEY = "lu_phone_app_banner_closed";
-  var APK_URL = "https://lu-labs.ai/api/download/android";
+  var APK_URL = "https://github.com/PurpleDoubleD/locally-uncensored/releases/latest/download/LU-3.0.7-Android.apk";
   function phoneKind() {
     var ua = navigator.userAgent || "";
     if (/android/i.test(ua)) return "android";
