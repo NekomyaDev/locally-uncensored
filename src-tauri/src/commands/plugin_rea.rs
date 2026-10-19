@@ -308,7 +308,9 @@ mod tests {
             std::fs::create_dir_all(&bin).unwrap();
             std::fs::write(bin.join("node"), b"").unwrap();
         }
-        let dirs = manager_node_dirs(&home);
+        // Only the version folders under this home: the fixed folders after
+        // them (Homebrew, /usr/local/bin) belong to the machine running the test.
+        let dirs: Vec<_> = manager_node_dirs(&home).into_iter().filter(|d| d.starts_with(&home)).collect();
         let names: Vec<String> = dirs.iter().map(|d| d.parent().unwrap().file_name().unwrap().to_string_lossy().into_owned()).collect();
         assert_eq!(names, ["v24.15.0", "v22.1.0", "v20.18.0"]);
     }

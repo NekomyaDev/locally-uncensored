@@ -2146,7 +2146,7 @@ pub fn video_generate(state: &AppState, args: &Value) -> CmdResult {
     }
     // Before anything is loaded: a model larger than the memory does not
     // fail, it swaps until the Mac stops answering.
-    if let Some(refusal) = memory_refusal(entry, crate::commands::system::total_memory_bytes()) {
+    if let Some(refusal) = memory_refusal(entry, machine_memory_bytes()) {
         return Err(bad_request(refusal));
     }
     let quant = entry.family == ltx2mlx::FAMILY;
@@ -2161,7 +2161,7 @@ pub fn video_generate(state: &AppState, args: &Value) -> CmdResult {
                 entry.name, entry.talking_gb
             )));
         }
-        if let Some(refusal) = talking_needs_more_memory(entry, crate::commands::system::total_memory_bytes()) {
+        if let Some(refusal) = talking_needs_more_memory(entry, machine_memory_bytes()) {
             return Err(bad_request(refusal));
         }
     }
@@ -2509,6 +2509,23 @@ pub fn video_cancel(state: &AppState, _args: &Value) -> CmdResult {
 }
 
 // ── helpers ───────────────────────────────────────────────────────────
+
+// The memory of this machine. A test sets it per thread, so the runs that
+// check it do not depend on the machine the tests run on (CI runners have
+// 7 GB). Outside tests the cell stays 0 and is never read.
+thread_local! {
+    static TEST_MEMORY_BYTES: std::cell::Cell<u64> = const { std::cell::Cell::new(0) };
+}
+
+fn machine_memory_bytes() -> u64 {
+    if cfg!(test) {
+        let set = TEST_MEMORY_BYTES.with(|m| m.get());
+        if set > 0 {
+            return set;
+        }
+    }
+    crate::commands::system::total_memory_bytes()
+}
 
 /// The sentence a generation is refused with on a Mac that has less memory
 /// than the model needs, or `None` when it fits (or nothing could be measured).
@@ -4120,6 +4137,8 @@ mod tests {
     #[test]
     fn talking_character_runs_on_the_4_bit_pack_with_its_own_download() {
         let _turn = empty_models_root();
+        // The checks below are about the parts, not the memory: a 64 GB Mac.
+        TEST_MEMORY_BYTES.with(|m| m.set(64 * 1_073_741_824));
         let q4 = entry("ltx-2.3-q4");
         // Only the entry a real run talked on, and only on the second engine.
         let talking: Vec<&str> = CATALOG.iter().filter(|c| talks(c)).map(|c| c.id).collect();
