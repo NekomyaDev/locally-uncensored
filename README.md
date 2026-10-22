@@ -230,7 +230,6 @@ Updated 22 October 2026. Everything up to 3.0.7 has shipped; [Releases](https://
 - Videos made in chat play in the chat
 - New web search in chat that keeps working when one search source blocks it
 - Change LU settings by asking in chat, with a confirmation card and undo
-- Remote moves into the phone app: Chat, Agent, Code and all of Create from your phone, running on your PC
 - A picture attached in chat reaches the image tools
 - Create tools in chat and agent hardened: attachments, file names, model choice, error messages, stop and timeouts
 - Exact VRAM planning for local models, with a hint and one click fixes when a model does not fit
@@ -253,6 +252,7 @@ Updated 22 October 2026. Everything up to 3.0.7 has shipped; [Releases](https://
 - Two graphics cards at once: chat stays usable on one card while a video renders on the other
 - Remove refusals from a local model inside the app (abliteration), with the result in the Model Manager
 - Partner program
+- Complete remote access via the mobile app: Chat, Agent, Code and all of Create from your phone, running on your PC
 
 **Later**
 
