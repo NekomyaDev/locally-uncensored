@@ -12,7 +12,7 @@ const readWeb = (path) => readFileSync(resolve(webRoot, path), 'utf8')
 function source(path) {
   return ts.createSourceFile(path, readWeb(path), ts.ScriptTarget.Latest, true)
 }
-function objects(file) {
+function objects(file, root = file) {
   const out = []
   function visit(node) {
     if (ts.isObjectLiteralExpression(node)) {
@@ -35,7 +35,7 @@ function objects(file) {
     }
     ts.forEachChild(node, visit)
   }
-  visit(file)
+  visit(root)
   return out
 }
 
@@ -52,6 +52,19 @@ const docsRoot = new URL('../docs', import.meta.url).pathname
 
 const page = new JSDOM(readFileSync(new URL('../docs/cloud/index.html', import.meta.url), 'utf8')).window.document
 const catalog = objects(source('apps/web/lib/chat/tier-models.ts'))
+// Seit 3.0.8 (Kimi K3.1 Pro) spreizt CLOUD_CATALOG die Eintraege auf festem
+// Weg aus direct-catalog.ts hinein. Ohne sie zaehlte der Waechter ein Modell
+// zu wenig. Aeltere Web-Staende haben den Spread nicht und bleiben wie sie sind.
+if (readWeb('apps/web/lib/chat/tier-models.ts').includes('...FIXED_UPSTREAM_CATALOG')) {
+  const direct = source('apps/web/lib/chat/direct-catalog.ts')
+  let fixed
+  ts.forEachChild(direct, function find(node) {
+    if (ts.isVariableDeclaration(node) && node.name.getText(direct) === 'FIXED_UPSTREAM_CATALOG') fixed = node.initializer
+    else ts.forEachChild(node, find)
+  })
+  assert.ok(fixed, 'direct-catalog.ts: FIXED_UPSTREAM_CATALOG missing')
+  catalog.push(...objects(direct, fixed))
+}
 for (const element of page.querySelectorAll('[data-model-id]')) {
   const entry = catalog.find((item) => item.id === element.dataset.modelId)
   assert.ok(entry, `Model missing from catalog: ${element.dataset.modelId}`)
