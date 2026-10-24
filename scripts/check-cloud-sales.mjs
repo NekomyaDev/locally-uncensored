@@ -438,12 +438,11 @@ assert.equal(
 // geprueft, nicht nur gegen das Web. Auf der Zahlungsdomain taucht keiner
 // dieser Endpunkte auf (Entscheid dbf663fe).
 const MARKENWORT = 'Uncensored'
-// Vier Studio-Modelle heissen ohne das Markenwort und sind trotzdem offen:
+// Zwei Studio-Modelle heissen ohne das Markenwort und sind trotzdem offen:
 // die Marke haengt am Katalogfeld, nie am Namen. Die Ausnahme ist namentlich,
 // wie in src/lib/__tests__/offene-modelle-in-den-texten.test.ts. Die beiden
-// MiniMax H3 Singularity seit 24.10.2026, Davids Entscheid: sie behalten den
-// Namen des Katalogs.
-const OFFEN_OHNE_MARKENWORT = new Set(['open-video', 'open-video-lora', 'minimax-h3-singularity', 'minimax-h3-singularity-ref'])
+// MiniMax H3 Singularity tragen das Wort seit Web 1738bc86 (24.10.2026).
+const OFFEN_OHNE_MARKENWORT = new Set(['open-video', 'open-video-lora'])
 // Die Seite ordnet nach Preis, der Katalog nach Herkunft. Verglichen wird
 // deshalb je Id: dieselbe Menge, jede Zeile mit Namen und Preis ihrer Id, und
 // die Preise auf der Seite steigen nie.
