@@ -313,13 +313,49 @@ const opsIds = new Set(
     .map((line) => /id: '([^']+)'/.exec(line)?.[1])
     .filter(Boolean),
 )
-const countKind = (kind) => mediaRows.filter((row) => row.kind === kind && !opsIds.has(row.id)).length
 assert.equal(pitch.chatModels, catalogSize, 'pitch: chat model count drift')
 assert.equal(pitch.measuredChatModels, measuredSize, 'pitch: measured set drift')
 assert.equal(pitch.unfilteredChatModels, unfilteredFull, 'pitch: unfiltered count drift')
 assert.equal(pitch.flashModels, catalog.filter((row) => row.usageClass === 'flash').length, 'pitch: flash count drift')
 assert.equal(pitch.flashDailyTokens, daily, 'pitch: daily ceiling drift')
-assert.equal(pitch.imageModels, countKind('image'), 'pitch: image model count drift')
+// Seit 24.10.2026 (Davids Entscheid) zaehlen Bild- und Videozahl des Panels
+// die Generatoren des Create-Studios mit, wie die offenen Zahlen. Die Menge
+// steht als Gruppe "Image generation" bzw. "Video generation" in der
+// Komplettliste der Preisseite. Hier wird gegen den Katalog gegengeprueft:
+// jede Id dort steht im Web-Katalog und ist nicht ausgemustert, jede
+// klassische Erzeugerzeile und jedes offene Studio-Modell der Gattung steht
+// dort, und das Panel nennt genau ihre Anzahl.
+const retiredPath = 'apps/web/lib/render/retired-models.ts'
+const retiredIds = new Set(existsSync(resolve(webRoot, retiredPath))
+  ? [...readWeb(retiredPath).matchAll(/^\s+'([^']+)': \{ since:/gm)].map((m) => m[1])
+  : [])
+const studioAll = existsSync(resolve(webRoot, 'apps/web/lib/render/studio-models.json'))
+  ? JSON.parse(readWeb('apps/web/lib/render/studio-models.json'))
+  : {}
+const generatorGroup = (title) => {
+  const group = [...pricing.querySelectorAll('details.luc-model-group')]
+    .find((el) => el.querySelector('summary')?.firstChild?.textContent.trim() === title)
+  assert.ok(group, `docs/pricing/index.html: the group ${title} is gone`)
+  const ids = [...group.querySelectorAll('[data-all-model-id]')].map((li) => li.dataset.allModelId)
+  assert.equal(Number(group.querySelector('summary span')?.textContent), ids.length, `docs/pricing/index.html: ${title} counts its list wrong`)
+  return ids
+}
+for (const [kind, title, field] of [['image', 'Image generation', 'imageModels'], ['video', 'Video generation', 'videoModels']]) {
+  const ids = generatorGroup(title)
+  for (const id of ids) {
+    const row = mediaRows.find((r) => r.id === id) ?? studioAll[id]
+    assert.ok(row, `docs/pricing/index.html: ${id} in ${title} is not in the web catalogue`)
+    assert.equal(row.kind, kind, `docs/pricing/index.html: ${id} in ${title} is no ${kind} model`)
+    assert.ok(!retiredIds.has(id), `docs/pricing/index.html: ${id} in ${title} is retired`)
+    assert.ok(!opsIds.has(id) && studioAll[id]?.sourceModel === undefined, `docs/pricing/index.html: ${id} in ${title} is a tool or a twin`)
+  }
+  const classicGenerators = mediaRows.filter((r) => r.kind === kind && !opsIds.has(r.id) && !retiredIds.has(r.id)).map((r) => r.id)
+  const openStudio = Object.entries(studioAll).filter(([id, r]) => r.adult === true && r.kind === kind && r.sourceModel === undefined && !/-extend$/.test(id) && !retiredIds.has(id)).map(([id]) => id)
+  for (const id of [...classicGenerators, ...openStudio]) {
+    assert.ok(ids.includes(id), `docs/pricing/index.html: the generator ${id} is missing from ${title}`)
+  }
+  assert.equal(pitch[field], ids.length, `pitch: ${kind} model count drift`)
+}
 // Absichtliche Abweichung: der Desktop nennt die volle Katalogliste, die
 // Kaufseite auf lu-labs.ai nennt weniger. publicMediaModels filtert dort ueber
 // keptOffThisDomain (the web app), weil
@@ -327,7 +363,7 @@ assert.equal(pitch.imageModels, countKind('image'), 'pitch: image model count dr
 // werden. Hier wird deshalb gegen die UNGEFILTERTE Liste geprueft, und das ist
 // kein Versehen. Ob der Desktop weiter die volle Zahl nennen soll, waehrend
 // die Kaufseite eine kleinere nennt, ist Entscheid des Inhabers.
-assert.equal(pitch.videoModels, countKind('video'), 'pitch: video model count drift')
+// Die Videozahl haengt seit 24.10.2026 an der Gruppe "Video generation", siehe oben.
 console.log(`Cloud switch guard passed: ${pitch.unfilteredChatModels}/${pitch.chatModels} chat, ${pitch.flashModels} flash, ${pitch.imageModels} image and ${pitch.videoModels} video match the web catalogue.`)
 
 console.log(`Pricing guard passed: ${tiers.filter((t) => typeof t.monthlyEUR === 'number').length} plans, ${packs.length} packs, ${unfilteredFull}/${catalogSize} models and the ${daily.toLocaleString('en-US')} token ceiling match the web source.`)
@@ -402,10 +438,12 @@ assert.equal(
 // geprueft, nicht nur gegen das Web. Auf der Zahlungsdomain taucht keiner
 // dieser Endpunkte auf (Entscheid dbf663fe).
 const MARKENWORT = 'Uncensored'
-// Zwei Studio-Modelle heissen ohne das Markenwort und sind trotzdem offen:
+// Vier Studio-Modelle heissen ohne das Markenwort und sind trotzdem offen:
 // die Marke haengt am Katalogfeld, nie am Namen. Die Ausnahme ist namentlich,
-// wie in src/lib/__tests__/offene-modelle-in-den-texten.test.ts.
-const OFFEN_OHNE_MARKENWORT = new Set(['open-video', 'open-video-lora'])
+// wie in src/lib/__tests__/offene-modelle-in-den-texten.test.ts. Die beiden
+// MiniMax H3 Singularity seit 24.10.2026, Davids Entscheid: sie behalten den
+// Namen des Katalogs.
+const OFFEN_OHNE_MARKENWORT = new Set(['open-video', 'open-video-lora', 'minimax-h3-singularity', 'minimax-h3-singularity-ref'])
 // Die Seite ordnet nach Preis, der Katalog nach Herkunft. Verglichen wird
 // deshalb je Id: dieselbe Menge, jede Zeile mit Namen und Preis ihrer Id, und
 // die Preise auf der Seite steigen nie.
@@ -1074,7 +1112,7 @@ for (const hit of flat.match(/Subscribers get about [\d.]+x more credits per eur
   assert.equal(hit, `Subscribers get about ${factor.toFixed(1)}x more credits per euro`,
     `CHANGELOG.md ${appVersion}: the subscriber sentence does not read as the live tables compute it`)
 }
-const ZAHLWORT = { three: 3, six: 6, seven: 7, ten: 10, fourteen: 14, fifteen: 15 }
+const ZAHLWORT = { three: 3, six: 6, seven: 7, nine: 9, ten: 10, fourteen: 14, fifteen: 15, seventeen: 17 }
 const zahl = (text) => (/^\d+$/.test(text) ? Number(text) : ZAHLWORT[text.toLowerCase()])
 for (const [kind, expected] of [['video', openVideo], ['image', openImage]]) {
   const claims = [
