@@ -43,7 +43,7 @@ import {
  */
 const ERWARTET = {
   chatModels: 48,
-  measuredChatModels: 46,
+  measuredChatModels: 44,
   flashModels: 12,
   flashDailyTokens: 500_000,
   imageModels: 10,

@@ -202,9 +202,9 @@ export interface CloudPitchNumbers {
 
 export const CLOUD_PITCH: CloudPitchNumbers = {
   chatModels: 48,
-  measuredChatModels: 46,
+  measuredChatModels: 44,
   unfilteredChatModels: 19,
-  heldBackChatModels: 24,
+  heldBackChatModels: 22,
   refusedAnswers: 9,
   scoredAnswers: 188,
   flashModels: 12,
